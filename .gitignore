@@ -1,0 +1,23 @@
+/cmake-build-debug/
+.idea
+
+/roms/A4 5th Column.rom
+/roms/arthur120_a500/A500_Arthur_ROM.rom
+/roms/riscos310_a500/a500_riscos310
+/roms/podules/akd52/akd52
+/roms/podules/colourcard/cc.bin
+/roms/podules/g16/g16.rom
+/roms/podules/a3inv5/ICS 93 A3IN 3V5 3V06 - 256.BIN
+/roms/podules/idea/idea
+/roms/podules/riscdev/riscdev
+/roms/arthur030/ROM030
+/roms/arthur120/ROM120
+/roms/riscos200/ROM200
+/roms/riscos200_a500/ROM200.A500Build
+/roms/riscos201/ROM201
+/roms/riscos300/ROM300
+/roms/riscos310/ROM310
+/roms/riscos319/ROM319
+/roms/riscos311/ros311
+/roms/podules/zidefs/ZIDEFSROM
+/roms/podules/zidefs_a3k/ZIDEFSROM
