@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.8.11)
+cmake_minimum_required (VERSION 3.3)
 project (arculator)
 
 set(CMAKE_CXX_FLAGS "-fpermissive")
@@ -67,7 +67,6 @@ set(SOURCES
     src/wx-main.cc
     src/wx-podule-config.cc
     src/wx-resources.cc
-    src/wx-sdl2.c
     src/wx-sdl2-joystick.c
 )
 
@@ -143,33 +142,47 @@ else()
     else()
         list(APPEND SOURCES src/podules-macosx.c)
     endif()
+    list(APPEND SOURCES src/wx-sdl2.c)
     list(APPEND SOURCES src/hostfs-unix.c)
 endif(WIN32)
 
-find_package(wxWidgets REQUIRED COMPONENTS core xrc)
-include(${wxWidgets_USE_FILE})
 find_package(SDL2 REQUIRED)
-
+find_package(wxWidgets REQUIRED COMPONENTS core xrc)
 add_executable (arculator ${SOURCES} ${HEADERS})
-target_include_directories(arculator PRIVATE ${SDL2_INCLUDE_DIRS})
-target_link_libraries(arculator PRIVATE ${wxWidgets_LIBRARIES} asound openal pthread z ${SDL2_LIBRARIES} X11)
+target_include_directories(arculator PRIVATE ${SDL2_INCLUDE_DIRS} ${wxWidgets_INCLUDE_DIRS})
+target_link_directories(arculator PRIVATE ${wxWidgets_LIBRARY_DIRS})
+message("LIBS: ${wxWidgets_LIBRARIES}")
+target_link_libraries(arculator PRIVATE openal pthread z ${SDL2_LIBRARIES} ${wxWidgets_LIBRARIES})
+target_compile_definitions(arculator PRIVATE ${wxWidgets_DEFINITIONS})
 
-MACRO(subdirlist result curdir)
-    FILE(GLOB children RELATIVE ${curdir} ${curdir}/*)
-    SET(dirlist "")
-    foreach(child ${children})
-        if(IS_DIRECTORY ${curdir}/${child})
-            LIST(APPEND dirlist ${child})
-        endif()
-    endforeach()
-    SET(${result} ${dirlist})
-endmacro()
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+    target_link_libraries(arculator PRIVATE asound X11)
+endif()
 
-subdirlist(SUBDIRS ${CMAKE_CURRENT_SOURCE_DIR}/podules)
+add_subdirectory(podules/common/eeprom)
+add_subdirectory(podules/common/misc)
+add_subdirectory(podules/common/sound)
+add_subdirectory(podules/common/uart)
+add_subdirectory(podules/common/cdrom)
+add_subdirectory(podules/common/joystick)
+add_subdirectory(podules/common/adc)
+add_subdirectory(podules/common/scsi)
+add_subdirectory(podules/common/net/slirp)
+add_subdirectory(podules/common/midi)
 
-foreach(subdir ${SUBDIRS})
-    add_subdirectory(podules/${subdir})
-endforeach()
+add_subdirectory(podules/aeh50)
+add_subdirectory(podules/aeh54)
+add_subdirectory(podules/aka05)
+add_subdirectory(podules/aka10)
+add_subdirectory(podules/aka12)
+add_subdirectory(podules/aka31)
+add_subdirectory(podules/lark)
+add_subdirectory(podules/midimax)
+add_subdirectory(podules/morley_uap)
+add_subdirectory(podules/oak_scsi)
+#add_subdirectory(podules/pccard) This is a mess right now
+add_subdirectory(podules/ultimatecdrom)
+
 
 add_custom_command(TARGET arculator  POST_BUILD
                    COMMAND ${CMAKE_COMMAND} -E copy_directory

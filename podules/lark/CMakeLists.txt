@@ -12,4 +12,5 @@ set(PODULE_HEADERS
 
 add_library(lark SHARED ${PODULE_SOURCES} ${PODULE_HEADERS})
 set_target_properties(lark PROPERTIES PREFIX "")
-target_include_directories(lark PRIVATE ../../src ../common/uart ../common/midi ../common/sound)
+target_link_libraries(lark PRIVATE midi uart sound)
+target_include_directories(lark PRIVATE ../../src)

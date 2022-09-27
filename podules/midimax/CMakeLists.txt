@@ -8,4 +8,5 @@ set(PODULE_HEADERS
 
 add_library(midimax SHARED ${PODULE_SOURCES} ${PODULE_HEADERS})
 set_target_properties(midimax PROPERTIES PREFIX "")
-target_include_directories(midimax PRIVATE ../../src ../common/uart ../common/midi)
+target_link_libraries(midimax PRIVATE midi uart)
+target_include_directories(midimax PRIVATE ../../src)

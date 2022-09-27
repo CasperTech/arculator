@@ -10,4 +10,5 @@ set(PODULE_HEADERS
 
 add_library(oak_scsi SHARED ${PODULE_SOURCES} ${PODULE_HEADERS})
 set_target_properties(oak_scsi PROPERTIES PREFIX "")
-target_include_directories(oak_scsi PRIVATE ../../src ../common/cdrom ../common/scsi ../common/eeprom ../common/sound)
+target_link_libraries(oak_scsi PRIVATE cdrom scsi sound eeprom)
+target_include_directories(oak_scsi PRIVATE ../../src)

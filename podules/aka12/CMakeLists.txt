@@ -8,4 +8,5 @@ set(PODULE_HEADERS
 
 add_library(aka12 SHARED ${PODULE_SOURCES} ${PODULE_HEADERS})
 set_target_properties(aka12 PROPERTIES PREFIX "")
-target_include_directories(aka12 PRIVATE ../../src  ../common/misc ../common/uart ../common/midi)
+target_link_libraries(aka12 PRIVATE midi uart misc)
+target_include_directories(aka12 PRIVATE ../../src)

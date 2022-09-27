@@ -10,4 +10,5 @@ set(PODULE_HEADERS
 
 add_library(ultimatecdrom SHARED ${PODULE_SOURCES} ${PODULE_HEADERS})
 set_target_properties(ultimatecdrom PROPERTIES PREFIX "")
-target_include_directories(ultimatecdrom PRIVATE ../../src ../common/cdrom ../common/sound)
+target_link_libraries(ultimatecdrom PRIVATE cdrom sound)
+target_include_directories(ultimatecdrom PRIVATE ../../src)
